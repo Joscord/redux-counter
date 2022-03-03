@@ -1,31 +1,26 @@
-// Importamos la función para crear el store de redux
 import { createStore } from 'redux';
 
-// Estado inicial
 const initialState = {
-    counter: 0
+	counter: 0,
 };
 
-// Definimos la función reductora. Pasamos como parámetro por defecto el estado inicial, así la primera vez que se ejecuta la función el estado se crea con un valor y no es indefinido
 const counterReducer = (state = initialState, action) => {
-    // Manejamos las diferentes acciones
-    if (action.type === 'INCREMENT') {
-        return {
-            counter: ++state.counter
-        }
-    };
+	if (action.type === 'INCREMENT') {
+		return {
+            // Esta vez retornamos el objeto pero le sumamos a counter lo que viene en el payload de la acción (1 o 5)
+			counter: state.counter + action.amount,
+		};
+	}
 
-    if (action.type === 'DECREMENT') {
-        return {
-            counter: --state.counter
-        }
-    };
+	if (action.type === 'DECREMENT') {
+		return {
+			counter: --state.counter,
+		};
+	}
 
-    return state;
-}
+	return state;
+};
 
-// Creamos el store, debemos pasar la función reductora como parámetro
 const store = createStore(counterReducer);
 
-// Exportamos el store
-export default store;  
+export default store;
