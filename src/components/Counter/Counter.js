@@ -2,12 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const Counter = () => {
-	const counter = useSelector(state => state.counter);
+  // Destructuramos showCounter de nuestro estado
+	const { counter, showCounter } = useSelector(state => state);
+
 	const dispatch = useDispatch();
 
-  // Modificaremos esta función pasando un valor por default de 1 en caso de que no  pasemos ningún parámetro.
 	const incrementHandler = (value = 1) => {
-    // Añadimos un payload a la acción, es decir, transportará un valor. El payload puede tener el nombre que nosotros queramos
     dispatch({type: 'INCREMENT', amount: value});
   };
 
@@ -15,14 +15,21 @@ export const Counter = () => {
     dispatch({type: 'DECREMENT'});
   };
 
-  // Nótese que la forma en que referenciamos las funciones, dado que ahora tienen parámetros, es a través de una función anónima
+  // Definimos la función para manejar el contador
+  const toggleCounterHandler = () => {
+    // Despachamos una nueva acción Toggle
+    dispatch({type: 'TOGGLE'});
+  }
+
+  // Añadimos un nuevo botón para manejar la visibilidad del Counter. Además renderizamos condicionalmente el contador
 	return (
 		<main>
 			<h1>Redux Counter</h1>
-			<div>{counter}</div>
+			{showCounter && <div>{counter}</div>}
 			<button onClick={() => incrementHandler()}>Increment</button>
       <button onClick={() => incrementHandler(5)}>Increase by 5</button>
 			<button onClick={decrementHandler}>Decrement</button>
+      <button onClick={toggleCounterHandler}>Toggle Counter</button>
 		</main>
 	);
 };

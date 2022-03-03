@@ -1,22 +1,32 @@
 import { createStore } from 'redux';
 
+// Modificamos el estado inicial añadiendo una nueva propiedad
 const initialState = {
 	counter: 0,
+    showCounter: true
 };
-
+// Modificamos la función reducer, usando ... para mantener las propiedad que no deseamos variar
 const counterReducer = (state = initialState, action) => {
 	if (action.type === 'INCREMENT') {
 		return {
-            // Esta vez retornamos el objeto pero le sumamos a counter lo que viene en el payload de la acción (1 o 5)
+            ...state,
 			counter: state.counter + action.amount,
 		};
 	}
 
 	if (action.type === 'DECREMENT') {
 		return {
+            ...state,
 			counter: --state.counter,
 		};
 	}
+
+    if (action.type === 'TOGGLE') {
+        return {
+            ...state,
+            showCounter: !state.showCounter
+        }
+    }
 
 	return state;
 };
